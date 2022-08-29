@@ -1,0 +1,54 @@
+package my.study.durtimeblog.bean;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+/**
+ * 公共返回对象
+ */
+@Data
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
+public class RespBean {
+
+	private long code;
+	private String msg;
+	private Object data;
+
+	/**
+	 * 功能描述: 成功返回结果
+	 */
+	public static RespBean success(){
+		return new RespBean(RespBeanEnum.SUCCESS.getCode(),RespBeanEnum.SUCCESS.getMessage(),null);
+	}
+
+	/**
+	 * 功能描述: 成功返回结果
+	 *
+	 */
+	public static RespBean success(Object obj){
+		return new RespBean(RespBeanEnum.SUCCESS.getCode(),RespBean.success().getMsg(),obj);
+	}
+
+
+	/**
+	 * 功能描述: 失败返回结果
+	 *
+	 */
+	public static RespBean error(RespBeanEnum respBeanEnum){
+		return new RespBean(respBeanEnum.getCode(),respBeanEnum.getMessage(),null);
+	}
+
+
+	/**
+	 * 功能描述: 失败返回结果
+	 *
+	 */
+	public static RespBean error(RespBeanEnum respBeanEnum,Object obj){
+		return new RespBean(respBeanEnum.getCode(),respBeanEnum.getMessage(),obj);
+	}
+
+}

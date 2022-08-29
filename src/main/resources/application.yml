@@ -1,0 +1,35 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/durtimeblog
+    username: root
+    password: 1224
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+
+    druid:
+      aop-patterns: my.study.durtimeblog.*
+      filters: stat,wall
+
+      stat-view-servlet:
+        enabled: true
+        login-username: admin
+        login-password: admin
+        resetEnable: false
+
+      web-stat-filter:
+        enabled: true
+        urlPattern: /*
+        exclusions: '*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*'
+
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+  banner:
+    location: banner.txt
+swagger:
+  enabled: true
+
+logging:
+  level:
+    my.study.durtimeblog.mapper: debug

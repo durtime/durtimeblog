@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>博客</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" th:href="@{/lib/layui-v2.6.3/css/layui.css}">
+    <link rel="stylesheet" th:href="@{/css/public.css}">
+    <link rel="stylesheet" th:href="@{/lib/editor.md-master/css/editormd.min.css}">
+    <link rel="stylesheet" th:href="@{/lib/editor.md-master/css/editormd.preview.css}">
+    <style>
+        #mainyuntu {
+            width: 100%;
+            height: 200px;
+            /*border: 1px solid #ddd;*/
+        }
+    </style>
+</head>
+<body>
+<div class="layuimini-container">
+    <h1 align="center">博 客 列 表</h1>
+    <div class="layuimini-main">
+        <fieldset class="table-search-fieldset">
+            <legend>搜索信息</legend>
+            <div style="margin: 10px 10px 10px">
+                <form class="layui-form layui-form-pane" action="">
+                    <div class="layui-form-item">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">关键字</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="keyname" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+
+                        <div class="layui-inline">
+                            <label class="layui-form-label">日期</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="newsdate" id="fdate" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <button type="submit" class="layui-btn layui-btn-primary" lay-submit
+                                    lay-filter="data-search-btn"><i class="layui-icon"></i> 搜 索
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </fieldset>
+
+        <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
+        <script type="text/html" id="currentTableBar">
+            <a class="layui-btn layui-btn-xs" lay-event="detail">查看</a>
+            <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="edit">编辑</a>
+            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>
+        </script>
+    </div>
+</div>
+
+<div id="testEditorMdview">
+    <textarea id="appendTest" style="display:none;"></textarea>
+</div>
+
+<script th:src="@{/lib/jquery-3.4.1/jquery-3.4.1.min.js}"></script>
+<script th:src="@{/lib/editor.md-master/editormd.min.js}"></script>
+<script th:src="@{/lib/layui-v2.6.3/layui.js}"></script>
+<script th:src="@{/lib/editor.md-master/lib/marked.min.js}"></script>
+<script th:src="@{/lib/editor.md-master/lib/prettify.min.js}"></script>
+<script th:inline="none">
+
+    layui.use(['form', 'laydate', 'table'], function () {
+        var $ = layui.jquery,
+            form = layui.form,
+            laydate = layui.laydate,
+            table = layui.table
+        ;
+
+        laydate.render({
+            elem: '#fdate'
+        });
+
+        // 监听搜索操作
+        form.on('submit(data-search-btn)', function (data) {
+            var result = JSON.stringify(data.field);
+            console.log("搜索");
+            table.reload('currentTableId', {
+                url: '/searchgamenews'
+                , where: {keyname: data.field.keyname} //设定异步数据接口的额外参数
+            });
+            layer.msg("搜索成功", {icon: 1});
+            return false;
+        });
+
+        table.render({
+            elem: '#currentTableId',
+            url: '/blogpage',
+            cols: [
+                [
+                {field: 'id', width: 150, title: 'ID', sort: true},
+                {field: 'title', width: 350, title: '标题', sort: true, totalRow: true},
+                {field: 'type', width: 200, title: '类型', sort: true, totalRow: true},
+                {field: 'date', width: 200, title: '发布时间', sort: true, totalRow: true},
+                {title: '操作', minWidth: 150, toolbar: '#currentTableBar', align: "center"}
+                ]
+            ]
+            , page: true
+            , limits: [10, 20, 30]  //一页选择显示5,10,30条数据
+            , limit: 10  //一页显示10条数据
+            , skin: 'line'
+        });
+
+        table.on('tool(currentTableFilter)', function (obj) {
+            var data = obj.data; //获得当前行数据
+            var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+            var tr = obj.tr; //获得当前行 tr 的DOM对象
+            if(layEvent === 'detail'){ //查看
+                top.layer.open({
+                    type: 2,
+                    title: '内容',
+                    maxmin: true,
+                    area: ['893px', '660px'],
+                    content: "/admin/only_blog/"+data.id
+                });
+            } else if(layEvent === 'delete'){ //删除
+                layer.confirm('真的删除行么', function(index){
+                    //向服务端发送删除指令
+                    $.ajax({
+                        url:"/blog",
+                        data: {"id": data.id},
+                        type:"delete",
+                        success:function (result) {
+                            console.log(result)
+                            if(result.code==200){
+                                obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+                                layer.close(index);
+                                layer.msg(result.data, {icon: 1});
+                            }else{
+                                layer.msg(result.data, {icon: 2});
+                            }
+                        }
+                    });
+                });
+            } else if(layEvent === 'edit'){ //编辑
+                top.layer.open({
+                    type: 2,
+                    title: '编辑',
+                    maxmin: true,
+                    area: ['900px', '660px'],
+                    content: "/admin/bloginput/"+data.id
+                });
+                // window.open("/admin/bloginput/"+data.id)
+            }
+        });
+    });
+
+</script>
+</body>
+</html>

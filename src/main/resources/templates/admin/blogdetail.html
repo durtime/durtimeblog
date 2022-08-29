@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>blog</title>
+    <link rel="stylesheet" th:href="@{/lib/layui-v2.6.3/css/layui.css}">
+    <link rel="stylesheet" th:href="@{/lib/editor.md-master/css/editormd.min.css}">
+    <link rel="stylesheet" th:href="@{/lib/editor.md-master/css/editormd.preview.css}">
+</head>
+<body>
+
+<div id="EditorMdview">
+    <textarea  th:text="${blog.getContent()}">ok</textarea>
+</div>
+
+<script th:src="@{/lib/jquery-3.4.1/jquery-3.4.1.min.js}"></script>
+<script th:src="@{/lib/editor.md-master/editormd.min.js}"></script>
+<script th:src="@{/lib/editor.md-master/lib/marked.min.js}"></script>
+<script th:src="@{/lib/editor.md-master/lib/prettify.min.js}"></script>
+<script th:inline="none">
+editormd.markdownToHTML("EditorMdview", {
+    htmlDecode: "style,script,iframe", //可以过滤标签解码
+    emoji: true
+});
+
+</script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="ThemeBucket">
+  <link rel="shortcut icon" href="#" type="image/png">
+  <title>500 Page</title>
+
+  <link th:href="@{/css/style.css}" rel="stylesheet">
+  <link th:href="@{/css/style-responsive.css}" rel="stylesheet">
+
+</head>
+
+<body>
+
+<section>
+  <div >
+    <section align="center">
+      <h1><img alt="" th:src="@{/images/500-error.png}"></h1>
+      <h2 th:text="${error}">ERROR</h2>
+      <a class="back-btn" th:href="@{/}"> Back To Home</a>
+    </section>
+
+  </div>
+</section>
+</body>
+</html>
