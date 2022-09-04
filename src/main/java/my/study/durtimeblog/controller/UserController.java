@@ -40,6 +40,7 @@ public class UserController {
         if (user!=null){
             session.setAttribute("user",user);
             respBean.setCode(200);
+            respBean.setData(user.getType());
             respBean.setMsg("登录成功");
         }else {
             respBean.setCode(500);

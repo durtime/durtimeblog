@@ -44,16 +44,16 @@ public class UserPageController {
      * 首页
      * @return
      */
-    @GetMapping(value = {"login"})
+    @GetMapping(value = {"/login"})
     public String userLogin(@RequestParam Map<String,Object> map){
-        return "login-user";
+        return "login";
     }
 
     /**
      * 首页
      * @return
      */
-    @GetMapping(value = {"index","/"})
+    @GetMapping(value = {"/index","/"})
     public String index(@RequestParam Map<String,Object> map){
         return "index";
     }
@@ -61,35 +61,35 @@ public class UserPageController {
 
     @GetMapping(value = {"/article"})
     public String article(@RequestParam Map<String,Object> map){
-        return "/article";
+        return "article";
     }
 
 
     @GetMapping("/message")
     public String types(){
-        return "/message";
+        return "message";
     }
 
     @GetMapping("/link")
     public String users(){
-        return "/link";
+        return "link";
     }
 
 
     @GetMapping("/tablesel")
     public String tablesel(){
-        return "/table-select";
+        return "table-select";
     }
 
     @GetMapping("/read")
     public String read(){
-        return "/read";
+        return "read";
     }
 
     @GetMapping("/read/{id}")
     public ModelAndView read_blog(@PathVariable Integer id){
         ModelAndView mv=new ModelAndView();
-        mv.setViewName("/blog");
+        mv.setViewName("blog");
 
         Blog blog = blogService.getById(id);
         List<Integer> tagsindex = CommonUtil.stringTolist(blog.getTags());

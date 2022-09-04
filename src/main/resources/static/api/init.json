@@ -17,7 +17,7 @@
       "child": [
 		{
 		  "title": "用户管理",
-		  "href": "admin/users",
+		  "href": "users",
 		  "icon": "fa fa-users",
 		  "target": "_self"
 		},
@@ -29,13 +29,13 @@
           "child": [
             {
               "title": "博客列表",
-              "href": "admin/blogs",
+              "href": "blogs",
               "icon": "fa fa-file-text-o",
               "target": "_self"
             },
             {
               "title": "新增博客",
-              "href": "admin/bloginput",
+              "href": "bloginput",
               "icon": "fa fa-plus",
               "target": "_self"
             }
@@ -43,25 +43,25 @@
 		},
         {
           "title": "分类管理",
-          "href": "admin/types",
+          "href": "types",
           "icon": "fa fa-sitemap",
           "target": "_self"
         },
 		{
 		  "title": "标签管理",
-		  "href": "admin/tags",
+		  "href": "tags",
 		  "icon": "fa fa-tags",
 		  "target": "_self"
 		},
 		{
 		  "title": "评论管理",
-		  "href": "admin/comments",
+		  "href": "comments",
 		  "icon": "fa fa-comment",
 		  "target": "_self"
 		},
 		{
 		  "title": "相册管理",
-		  "href": "admin/photos",
+		  "href": "photos",
 		  "icon": "fa fa-file-image-o",
 		  "target": "_self"
 		},
@@ -73,7 +73,7 @@
           "child": [
             {
               "title": "按钮示例",
-              "href": "page/button",
+              "href": "button",
               "icon": "fa fa-snowflake-o",
               "target": "_self"
             },

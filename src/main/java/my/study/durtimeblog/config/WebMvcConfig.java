@@ -1,4 +1,4 @@
-package my.study.durtimeblog.cofig;
+package my.study.durtimeblog.config;
 
 import my.study.durtimeblog.intercepter.UserIntercepter;
 import org.springframework.context.annotation.Configuration;

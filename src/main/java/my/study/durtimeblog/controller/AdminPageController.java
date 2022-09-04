@@ -32,18 +32,13 @@ public class AdminPageController {
     CommentService commentService;
 
 
-    @GetMapping("/login")
-    public String login(){
-        return "/admin/login-admin";
-    }
-
     /**
      * 后天管理首页
      * @return
      */
-    @GetMapping("/index")
+    @GetMapping({"/index"})
     public String adminindex(){
-        return "/admin/index-admin";
+        return "admin/index-admin";
     }
 
     /**
@@ -51,7 +46,7 @@ public class AdminPageController {
      */
     @GetMapping("/blogs")
     public String blogs(){
-        return "/admin/blogs";
+        return "admin/blogs";
     }
 
     /**
@@ -64,7 +59,7 @@ public class AdminPageController {
         mv.addObject("types",typeService.list());
         mv.addObject("tags",tagService.list());
         mv.addObject("method","post");
-        mv.setViewName("/admin/myblog");
+        mv.setViewName("admin/myblog");
         return mv;
     }
 
@@ -94,7 +89,7 @@ public class AdminPageController {
         mv.addObject("blog",blog);
         mv.addObject("tags",res);
         mv.addObject("method","put");
-        mv.setViewName("/admin/myblog");
+        mv.setViewName("admin/myblog");
         return mv;
     }
 
@@ -102,27 +97,27 @@ public class AdminPageController {
 
     @GetMapping("/comments")
     public String comments(){
-        return "/admin/comments";
+        return "admin/comments";
     }
 
     @GetMapping("/photos")
     public String photos(){
-        return "/admin/photos";
+        return "admin/photos";
     }
 
     @GetMapping("/tags")
     public String tags(){
-        return "/admin/tags";
+        return "admin/tags";
     }
 
     @GetMapping("/types")
     public String types(){
-        return "/admin/types";
+        return "admin/types";
     }
 
     @GetMapping("/users")
     public String users(){
-        return "/admin/users";
+        return "admin/users";
     }
 
 
